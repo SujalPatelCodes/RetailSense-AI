@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+backend/venv/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+backend/retailsense.db
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (keep structure, ignore large generated files if any)
+data/*.csv
+!data/.gitkeep
+!data/sample_sales.csv
