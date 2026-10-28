@@ -6,17 +6,18 @@ function KPICard({ title, value, icon: Icon, trend }) {
   return (
     <div style={{
       backgroundColor: 'white',
-      padding: '1.5rem',
+      padding: '1.25rem',
       borderRadius: '16px',
       border: '1px solid #e2e8f0',
       boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '1rem',
+      gap: '0.75rem',
+      minWidth: 0,
     }}>
       <div style={{
-        width: '48px',
-        height: '48px',
+        width: '44px',
+        height: '44px',
         backgroundColor: '#eef2ff',
         borderRadius: '12px',
         display: 'flex',
@@ -24,12 +25,12 @@ function KPICard({ title, value, icon: Icon, trend }) {
         justifyContent: 'center',
         flexShrink: 0,
       }}>
-        <Icon size={24} style={{ color: '#6366f1' }} />
+        <Icon size={22} style={{ color: '#6366f1' }} />
       </div>
-      <div style={{ flex: 1 }}>
-        <p style={{ fontSize: '0.8125rem', color: '#64748b', marginBottom: '0.375rem', fontWeight: '500' }}>{title}</p>
-        <p style={{ fontSize: '1.875rem', fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem' }}>{value}</p>
-        {trend && <p style={{ fontSize: '0.75rem', color: '#10b981', margin: 0 }}>{trend}</p>}
+      <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+        <p style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.25rem', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</p>
+        <p style={{ fontSize: '1.5rem', fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value}</p>
+        {trend && <p style={{ fontSize: '0.7rem', color: '#10b981', margin: 0 }}>{trend}</p>}
       </div>
     </div>
   );
@@ -127,8 +128,8 @@ export default function Dashboard({ datasetId }) {
         <>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '1.25rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1rem',
             marginBottom: '2rem'
           }}>
             <KPICard title="Total Sales" value={`$${summary.total_revenue.toLocaleString()}`} icon={DollarSign} />
