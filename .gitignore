@@ -48,3 +48,5 @@ Thumbs.db
 data/*.csv
 !data/.gitkeep
 !data/sample_sales.csv
+
+Retailse

@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .routers import datasets
 
 app = FastAPI(
     title="RetailSense AI API",
-    description="Sales Analytics and Intelligent Business Insights - Phase 1 Setup",
-    version="0.1.0",
+    description="Sales Analytics and Intelligent Business Insights",
+    version="0.2.0",
 )
 
 app.add_middleware(
@@ -15,6 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(datasets.router)
+
 
 @app.get("/api/health")
 def health_check():
@@ -24,3 +27,4 @@ def health_check():
 @app.get("/")
 def root():
     return {"message": "RetailSense AI Backend", "docs": "/docs"}
+

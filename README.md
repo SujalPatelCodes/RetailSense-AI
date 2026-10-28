@@ -2,7 +2,7 @@
 
 Sales Analytics and Intelligent Business Insights using free and open-source tools.
 
-## Stack (Free Only)
+## Stack
 
 - **Frontend**: React + Vite
 - **Backend**: Python + FastAPI
@@ -18,6 +18,7 @@ Sales Analytics and Intelligent Business Insights using free and open-source too
 Current status: Phase 1 scaffolding complete.
 
 ### Project Structure
+
 ```
 RetailSense AI/
 ├── frontend/          # React + Vite app
@@ -36,11 +37,13 @@ RetailSense AI/
 ### Setup Instructions
 
 #### Prerequisites
+
 - Node.js (v18+)
 - Python 3.10+
 - Git
 
 #### Backend Setup
+
 ```bash
 cd backend
 python -m venv venv
@@ -51,18 +54,22 @@ venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
+
 Backend runs at: http://localhost:8000  
 API docs: http://localhost:8000/docs
 
 #### Frontend Setup
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
 Frontend runs at: http://localhost:5173
 
 ### API Routes (Planned)
+
 - `GET /api/health` - Health check
 - `POST /api/datasets/upload` - Upload and validate CSV
 - `GET /api/datasets/{dataset_id}/summary` - KPI metrics
@@ -73,6 +80,7 @@ Frontend runs at: http://localhost:5173
 - `GET /` - Root
 
 ## Notes
+
 - Runs entirely locally with no paid services
 - SQLite requires no separate database server
 - Ollama runs models locally (hardware dependent)
