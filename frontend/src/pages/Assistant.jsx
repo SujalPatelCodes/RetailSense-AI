@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import { MessageSquare, Send, Bot, User, Sparkles } from "lucide-react";
 
 export default function Assistant({ datasetId }) {
   const [question, setQuestion] = useState("");
@@ -31,13 +32,16 @@ export default function Assistant({ datasetId }) {
     "What is the total revenue?",
     "How many orders do we have?",
     "What is the average order value?",
+    "What are my best-selling products?",
   ];
 
   if (!datasetId) {
     return (
       <div style={{ maxWidth: '800px' }}>
-        <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Local AI Assistant (Ollama)</h1>
-        <p style={{ color: '#475569', marginBottom: '2rem' }}>Answers grounded in computed metrics</p>
+        <div style={{ marginBottom: '2rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.375rem', color: '#0f172a' }}>AI Assistant</h2>
+          <p style={{ color: '#475569', fontSize: '0.875rem', margin: 0 }}>Get insights powered by your data</p>
+        </div>
         <div style={{
           backgroundColor: 'white',
           borderRadius: '16px',
@@ -45,6 +49,7 @@ export default function Assistant({ datasetId }) {
           padding: '3rem 2rem',
           textAlign: 'center',
         }}>
+          <MessageSquare size={48} style={{ color: '#cbd5e1', margin: '0 auto 1rem' }} />
           <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Dataset Uploaded</h3>
           <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Upload a CSV file to use the AI assistant</p>
         </div>
@@ -54,58 +59,179 @@ export default function Assistant({ datasetId }) {
 
   return (
     <div style={{ maxWidth: "800px" }}>
-      <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Local AI Assistant (Ollama)</h1>
-      <p style={{ color: '#475569', marginBottom: '1.5rem' }}>Dataset ID: {datasetId} - Answers grounded in computed metrics</p>
-
-      <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-        {suggestions.map((s, idx) => (
-          <button key={idx} onClick={() => setQuestion(s)} style={{ padding: "0.5rem 1rem" }}>
-            {s}
-          </button>
-        ))}
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.375rem', color: '#0f172a' }}>AI Assistant</h2>
+        <p style={{ color: '#475569', fontSize: '0.875rem', margin: 0 }}>Dataset ID: {datasetId} • Answers grounded in computed metrics</p>
       </div>
+
+      {messages.length === 0 && (
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '2rem',
+          marginBottom: '1.5rem',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <Sparkles size={20} style={{ color: '#6366f1' }} />
+            <h3 style={{ fontSize: '1rem', color: '#0f172a', margin: 0 }}>Suggested Questions</h3>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {suggestions.map((s, idx) => (
+              <button
+                key={idx}
+                onClick={() => setQuestion(s)}
+                style={{
+                  padding: '0.5rem 0.875rem',
+                  backgroundColor: '#f8fafc',
+                  color: '#475569',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontSize: '0.8125rem',
+                }}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div style={{
-        marginTop: "2rem",
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        height: "400px",
-        overflowY: "auto",
-        padding: "1rem",
-        background: "#fafafa"
+        backgroundColor: 'white',
+        borderRadius: '16px',
+        border: '1px solid #e2e8f0',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+        overflow: 'hidden',
+        marginBottom: '1rem',
       }}>
-        {messages.length === 0 && <p style={{ color: "#666" }}>Ask a question about your sales data...</p>}
-        {messages.map((m, idx) => (
-          <div key={idx} style={{
-            marginBottom: "1rem",
-            textAlign: m.role === "user" ? "right" : "left"
-          }}>
-            <div style={{
-              display: "inline-block",
-              padding: "0.75rem 1rem",
-              background: m.role === "user" ? "#007bff" : "#e9ecef",
-              color: m.role === "user" ? "#fff" : "#000",
-              borderRadius: "8px",
-              maxWidth: "70%"
-            }}>
-              {m.text}
-              {m.source && <div style={{ fontSize: "0.7rem", marginTop: "0.25rem", opacity: 0.7 }}>Source: {m.source}</div>}
+        <div style={{
+          height: '400px',
+          overflowY: 'auto',
+          padding: '1.5rem',
+        }}>
+          {messages.length === 0 && (
+            <div style={{ textAlign: 'center', color: '#94a3b8', paddingTop: '2rem' }}>
+              <MessageSquare size={32} style={{ margin: '0 auto 0.75rem', color: '#cbd5e1' }} />
+              <p style={{ fontSize: '0.875rem' }}>Ask a question about your sales data...</p>
             </div>
-          </div>
-        ))}
-        {loading && <div style={{ textAlign: "left", color: "#666" }}>Thinking...</div>}
+          )}
+          {messages.map((m, idx) => (
+            <div key={idx} style={{
+              marginBottom: '1.25rem',
+              display: 'flex',
+              gap: '0.75rem',
+              justifyContent: m.role === "user" ? "flex-end" : "flex-start"
+            }}>
+              {m.role === "bot" && (
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#eef2ff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <Bot size={18} style={{ color: '#6366f1' }} />
+                </div>
+              )}
+              <div style={{ maxWidth: '70%' }}>
+                <div style={{
+                  padding: '0.75rem 1rem',
+                  backgroundColor: m.role === "user" ? '#6366f1' : '#f8fafc',
+                  color: m.role === "user" ? 'white' : '#0f172a',
+                  borderRadius: m.role === "user" ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
+                  fontSize: '0.875rem',
+                  lineHeight: '1.6',
+                  whiteSpace: 'pre-wrap',
+                }}>
+                  {m.text}
+                </div>
+                {m.source && (
+                  <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '0.375rem', textAlign: m.role === "user" ? "right" : "left" }}>
+                    Source: {m.source}
+                  </p>
+                )}
+              </div>
+              {m.role === "user" && (
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#e2e8f0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <User size={18} style={{ color: '#475569' }} />
+                </div>
+              )}
+            </div>
+          ))}
+          {loading && (
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: '#eef2ff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Bot size={18} style={{ color: '#6366f1' }} />
+              </div>
+              <div style={{ padding: '0.75rem 1rem', backgroundColor: '#f8fafc', borderRadius: '12px 12px 12px 4px', color: '#64748b', fontSize: '0.875rem' }}>
+                Thinking...
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <form onSubmit={askQuestion} style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
+      <form onSubmit={askQuestion} style={{
+        display: 'flex',
+        gap: '0.75rem',
+        backgroundColor: 'white',
+        padding: '0.75rem',
+        borderRadius: '12px',
+        border: '1px solid #e2e8f0',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      }}>
         <input
           type="text"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask a question..."
-          style={{ flex: 1, padding: "0.75rem" }}
+          placeholder="Ask a question about your data..."
+          style={{
+            flex: 1,
+            padding: '0.625rem 0.875rem',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            fontSize: '0.875rem',
+            outline: 'none',
+          }}
         />
-        <button type="submit" disabled={loading} style={{ padding: "0.75rem 1.5rem" }}>
-          Ask
+        <button
+          type="submit"
+          disabled={loading || !question.trim()}
+          style={{
+            padding: '0.625rem 1.25rem',
+            backgroundColor: loading || !question.trim() ? '#cbd5e1' : '#6366f1',
+            color: 'white',
+            borderRadius: '8px',
+            fontSize: '0.875rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.375rem',
+            border: 'none',
+          }}
+        >
+          <Send size={16} />
+          Send
         </button>
       </form>
     </div>
