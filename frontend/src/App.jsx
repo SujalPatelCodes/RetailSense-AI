@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Upload from './pages/Upload'
 import Dashboard from './pages/Dashboard'
 import Trends from './pages/Trends'
+import Segments from './pages/Segments'
 import './App.css'
 
 function App() {
@@ -15,15 +16,18 @@ function App() {
         <button onClick={() => setView('upload')}>Upload</button>
         <button onClick={() => setView('dashboard')}>Dashboard</button>
         <button onClick={() => setView('trends')}>Trends</button>
+        <button onClick={() => setView('segments')}>Segments</button>
       </nav>
       {view === 'upload' && <Upload />}
       {view === 'dashboard' && <Dashboard datasetId={datasetId} />}
       {view === 'trends' && <Trends datasetId={datasetId} />}
+      {view === 'segments' && <Segments datasetId={datasetId} />}
     </div>
   )
 }
 
 export default App
+
 
 
 
