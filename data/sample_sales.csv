@@ -1,0 +1,21 @@
+order_id,order_date,customer_id,product,category,quantity,unit_price
+ORD-001,2023-01-05,CUST-001,Laptop,Electronics,1,999.99
+ORD-002,2023-01-10,CUST-002,Mouse,Electronics,2,29.99
+ORD-003,2023-02-03,CUST-001,Keyboard,Electronics,1,79.49
+ORD-004,2023-02-15,CUST-003,Desk Chair,Furniture,1,249.50
+ORD-005,2023-03-08,CUST-004,Notebook,Stationery,3,4.99
+ORD-006,2023-03-20,CUST-002,Monitor,Electronics,1,299.99
+ORD-007,2023-04-12,CUST-005,Pencil Set,Stationery,5,2.49
+ORD-008,2023-04-25,CUST-003,Desk Lamp,Furniture,1,45.00
+ORD-009,2023-05-07,CUST-001,Webcam,Electronics,1,89.99
+ORD-010,2023-05-18,CUST-006,Stapler,Stationery,2,3.75
+ORD-011,2023-06-09,CUST-004,Laptop Stand,Electronics,1,39.99
+ORD-012,2023-06-22,CUST-002,Office Chair,Furniture,1,199.99
+ORD-013,2023-07-04,CUST-007,Highlighter,Stationery,4,1.99
+ORD-014,2023-07-16,CUST-005,Headphones,Electronics,1,149.49
+ORD-015,2023-08-11,CUST-003,Filing Cabinet,Furniture,1,159.99
+ORD-016,2023-08-23,CUST-001,USB Drive,Electronics,3,12.99
+ORD-017,2023-09-06,CUST-008,Pen Pack,Stationery,10,1.49
+ORD-018,2023-09-19,CUST-006,Mouse Pad,Electronics,2,9.99
+ORD-019,2023-10-08,CUST-004,Bookshelf,Furniture,1,129.99
+ORD-020,2023-10-21,CUST-002,Tablet,Electronics,1,449.99

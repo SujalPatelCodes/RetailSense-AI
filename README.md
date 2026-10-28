@@ -2,86 +2,89 @@
 
 Sales Analytics and Intelligent Business Insights using free and open-source tools.
 
-## Stack
+## Stack (Free Only)
+- Frontend: React + Vite
+- Backend: Python + FastAPI
+- Data Processing: Pandas
+- Machine Learning: Scikit-learn
+- Charts: Plotly (plotly.js / react-plotly.js)
+- Database: SQLite
+- Local AI: Ollama
+- Testing: pytest
 
-- **Frontend**: React + Vite
-- **Backend**: Python + FastAPI
-- **Data Processing**: Pandas
-- **Machine Learning**: Scikit-learn
-- **Charts**: Plotly (plotly.js / react-plotly.js)
-- **Database**: SQLite
-- **Local AI**: Ollama with a locally downloaded model
-- **Testing**: pytest (backend), Vitest + React Testing Library (frontend)
-
-## Phase 1 - Project Setup and Architecture
-
-Current status: Phase 1 scaffolding complete.
-
-### Project Structure
-
+## Project Structure
 ```
 RetailSense AI/
 ├── frontend/          # React + Vite app
 ├── backend/           # FastAPI app
 │   ├── app/
-│   │   ├── main.py
-│   │   ├── database.py
-│   │   ├── routers/
-│   │   └── services/
+│   │   ├── main.py, database.py, models.py, schemas.py
+│   │   ├── routers/   # datasets, analytics, customers, assistant
+│   │   └── services/  # data_cleaning
 │   ├── tests/
 │   └── requirements.txt
-├── data/              # Sample data (to be added)
+├── data/              # Sample data
+│   └── sample_sales.csv
 └── README.md
 ```
 
-### Setup Instructions
+## Setup Instructions
 
-#### Prerequisites
-
+### Prerequisites
 - Node.js (v18+)
 - Python 3.10+
 - Git
+- (Optional) Ollama for local AI assistant
 
-#### Backend Setup
-
+### Backend Setup
 ```bash
 cd backend
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-# source venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
-
 Backend runs at: http://localhost:8000  
 API docs: http://localhost:8000/docs
 
-#### Frontend Setup
-
+### Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
 Frontend runs at: http://localhost:5173
 
-### API Routes (Planned)
+### Ollama (Optional)
+```bash
+ollama pull llama3.2
+ollama serve
+```
 
-- `GET /api/health` - Health check
-- `POST /api/datasets/upload` - Upload and validate CSV
-- `GET /api/datasets/{dataset_id}/summary` - KPI metrics
-- `GET /api/datasets/{dataset_id}/trends` - Monthly trends
-- `GET /api/datasets/{dataset_id}/products` - Product rankings
-- `GET /api/datasets/{dataset_id}/customers/segments` - Customer segments
-- `POST /api/datasets/{dataset_id}/assistant` - AI Q&A (Ollama)
-- `GET /` - Root
+## Features Completed
+- Phase 1: Project setup and architecture
+- Phase 2: CSV upload, validation, cleaning, SQLite storage
+- Phase 3: KPI dashboard
+- Phase 4: Sales trends and product performance
+- Phase 5: Customer segmentation with KMeans
+- Phase 6: Local AI assistant with Ollama
+- Phase 7: Testing, sample data, documentation
+
+## API Routes
+- GET /api/health
+- POST /api/datasets/upload
+- GET /api/datasets/{dataset_id}/summary
+- GET /api/datasets/{dataset_id}/trends
+- GET /api/datasets/{dataset_id}/products
+- GET /api/datasets/{dataset_id}/customers/segments
+- POST /api/datasets/{dataset_id}/assistant
+
+## Testing
+```bash
+cd backend
+pytest
+```
 
 ## Notes
-
 - Runs entirely locally with no paid services
 - SQLite requires no separate database server
-- Ollama runs models locally (hardware dependent)
-- Avoids paid hosting/AI APIs
+- AI assistant works with Ollama or falls back to computed facts
+- Uses only free and open-source tools
