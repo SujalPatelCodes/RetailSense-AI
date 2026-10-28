@@ -82,7 +82,11 @@ export default function Dashboard({ datasetId }) {
     );
   }
 
-  if (loading) return <div style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>Loading dashboard...</div>;
+  if (loading) return (
+    <div style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+      <div style={{ marginBottom: '0.75rem' }}>Loading dashboard...</div>
+    </div>
+  );
   if (error) return (
     <div style={{
       backgroundColor: '#fef2f2',
@@ -98,9 +102,25 @@ export default function Dashboard({ datasetId }) {
 
   return (
     <div style={{ maxWidth: '1400px' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.375rem', color: '#0f172a' }}>Sales Overview</h2>
-        <p style={{ color: '#475569', fontSize: '0.875rem', margin: 0 }}>Key metrics for Dataset ID: {datasetId}</p>
+      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.375rem', color: '#0f172a' }}>Sales Overview</h2>
+          <p style={{ color: '#475569', fontSize: '0.875rem', margin: 0 }}>Key metrics for Dataset ID: {datasetId}</p>
+        </div>
+        <button
+          onClick={fetchSummary}
+          disabled={loading}
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: 'white',
+            color: '#475569',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            fontSize: '0.8125rem',
+          }}
+        >
+          {loading ? 'Refreshing...' : 'Refresh'}
+        </button>
       </div>
 
       {summary && (

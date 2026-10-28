@@ -75,6 +75,10 @@ export default function Upload({ datasetInfo, setDatasetInfo, setDatasetId, setC
       setResult(res.data);
       if (setDatasetInfo) setDatasetInfo(res.data);
       if (setDatasetId) setDatasetId(res.data.dataset_id);
+      // Auto-navigate to dashboard after successful upload
+      if (setCurrentView) {
+        setTimeout(() => setCurrentView('dashboard'), 1000);
+      }
     } catch (err) {
       console.error('Upload error:', err);
       let msg = "Upload failed";
