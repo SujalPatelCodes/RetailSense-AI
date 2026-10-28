@@ -11,7 +11,9 @@ function App() {
   const [currentView, setCurrentView] = useState('upload')
   const [datasetId, setDatasetId] = useState(() => {
     const saved = localStorage.getItem('retailsense_dataset_id')
-    return saved ? parseInt(saved) : 1
+    const savedInfo = localStorage.getItem('retailsense_dataset_info')
+    if (saved && savedInfo) return parseInt(saved)
+    return null
   })
   const [datasetInfo, setDatasetInfo] = useState(() => {
     const saved = localStorage.getItem('retailsense_dataset_info')
@@ -19,7 +21,11 @@ function App() {
   })
 
   useEffect(() => {
-    localStorage.setItem('retailsense_dataset_id', datasetId.toString())
+    if (datasetId) {
+      localStorage.setItem('retailsense_dataset_id', datasetId.toString())
+    } else {
+      localStorage.removeItem('retailsense_dataset_id')
+    }
   }, [datasetId])
 
   useEffect(() => {

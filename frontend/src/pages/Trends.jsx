@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import Plot from "react-plotly.js";
 
-export default function Trends({ datasetId = 1 }) {
+export default function Trends({ datasetId }) {
   const [trends, setTrends] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchData();
+    if (datasetId) {
+      fetchData();
+    }
   }, [datasetId]);
 
   const fetchData = async () => {
+    if (!datasetId) return;
     setLoading(true);
     setError(null);
     try {
@@ -29,8 +32,27 @@ export default function Trends({ datasetId = 1 }) {
     }
   };
 
-  if (loading) return <div style={{ padding: "2rem" }}>Loading...</div>;
-  if (error) return <div style={{ padding: "2rem", color: "#c33" }}>Error: {error}</div>;
+  if (!datasetId) {
+    return (
+      <div style={{ maxWidth: '1200px' }}>
+        <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Sales Trends & Product Performance</h1>
+        <p style={{ color: '#475569', marginBottom: '2rem' }}>Analyze sales patterns over time</p>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '3rem 2rem',
+          textAlign: 'center',
+        }}>
+          <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Dataset Uploaded</h3>
+          <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Upload a CSV file to see trends and product performance</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) return <div style={{ padding: "2rem", color: '#64748b' }}>Loading...</div>;
+  if (error) return <div style={{ padding: "2rem", color: "#dc2626" }}>Error: {error}</div>;
 
   return (
     <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>

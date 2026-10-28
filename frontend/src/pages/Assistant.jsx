@@ -1,14 +1,14 @@
 import { useState } from "react";
 import api from "../services/api";
 
-export default function Assistant({ datasetId = 1 }) {
+export default function Assistant({ datasetId }) {
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const askQuestion = async (e) => {
     e.preventDefault();
-    if (!question.trim()) return;
+    if (!question.trim() || !datasetId) return;
 
     const userMsg = { role: "user", text: question };
     setMessages(prev => [...prev, userMsg]);
@@ -33,10 +33,29 @@ export default function Assistant({ datasetId = 1 }) {
     "What is the average order value?",
   ];
 
+  if (!datasetId) {
+    return (
+      <div style={{ maxWidth: '800px' }}>
+        <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Local AI Assistant (Ollama)</h1>
+        <p style={{ color: '#475569', marginBottom: '2rem' }}>Answers grounded in computed metrics</p>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '3rem 2rem',
+          textAlign: 'center',
+        }}>
+          <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Dataset Uploaded</h3>
+          <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Upload a CSV file to use the AI assistant</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: "2rem", maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Local AI Assistant (Ollama)</h1>
-      <p>Dataset ID: {datasetId} - Answers grounded in computed metrics</p>
+    <div style={{ maxWidth: "800px" }}>
+      <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Local AI Assistant (Ollama)</h1>
+      <p style={{ color: '#475569', marginBottom: '1.5rem' }}>Dataset ID: {datasetId} - Answers grounded in computed metrics</p>
 
       <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         {suggestions.map((s, idx) => (

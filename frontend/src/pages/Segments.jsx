@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import Plot from "react-plotly.js";
 
-export default function Segments({ datasetId = 1 }) {
+export default function Segments({ datasetId }) {
   const [segments, setSegments] = useState([]);
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchSegments();
+    if (datasetId) {
+      fetchSegments();
+    }
   }, [datasetId]);
 
   const fetchSegments = async () => {
+    if (!datasetId) return;
     setLoading(true);
     setError(null);
     try {
@@ -26,8 +29,27 @@ export default function Segments({ datasetId = 1 }) {
     }
   };
 
-  if (loading) return <div style={{ padding: "2rem" }}>Loading...</div>;
-  if (error) return <div style={{ padding: "2rem", color: "#c33" }}>Error: {error}</div>;
+  if (!datasetId) {
+    return (
+      <div style={{ maxWidth: '1000px' }}>
+        <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Customer Segmentation</h1>
+        <p style={{ color: '#475569', marginBottom: '2rem' }}>Group customers by purchasing behavior</p>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '3rem 2rem',
+          textAlign: 'center',
+        }}>
+          <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Dataset Uploaded</h3>
+          <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Upload a CSV with customer data to see segments</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) return <div style={{ padding: "2rem", color: '#64748b' }}>Loading...</div>;
+  if (error) return <div style={{ padding: "2rem", color: "#dc2626" }}>Error: {error}</div>;
 
   return (
     <div style={{ padding: "2rem", maxWidth: "1000px", margin: "0 auto" }}>

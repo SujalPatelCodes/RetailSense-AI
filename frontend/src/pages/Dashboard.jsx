@@ -35,16 +35,19 @@ function KPICard({ title, value, icon: Icon, trend }) {
   );
 }
 
-export default function Dashboard({ datasetId = 1 }) {
+export default function Dashboard({ datasetId }) {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchSummary();
+    if (datasetId) {
+      fetchSummary();
+    }
   }, [datasetId]);
 
   const fetchSummary = async () => {
+    if (!datasetId) return;
     setLoading(true);
     setError(null);
     try {
@@ -56,6 +59,28 @@ export default function Dashboard({ datasetId = 1 }) {
       setLoading(false);
     }
   };
+
+  if (!datasetId) {
+    return (
+      <div style={{ maxWidth: '1400px' }}>
+        <div style={{ marginBottom: '2rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.375rem', color: '#0f172a' }}>Sales Overview</h2>
+          <p style={{ color: '#475569', fontSize: '0.875rem', margin: 0 }}>Key metrics for your sales data</p>
+        </div>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '3rem 2rem',
+          textAlign: 'center',
+        }}>
+          <FileText size={48} style={{ color: '#cbd5e1', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Dataset Uploaded</h3>
+          <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Upload a CSV file from the Upload page to see your dashboard analytics</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) return <div style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>Loading dashboard...</div>;
   if (error) return (
