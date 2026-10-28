@@ -3,6 +3,7 @@ import Upload from './pages/Upload'
 import Dashboard from './pages/Dashboard'
 import Trends from './pages/Trends'
 import Segments from './pages/Segments'
+import Assistant from './pages/Assistant'
 import './App.css'
 
 function App() {
@@ -11,22 +12,25 @@ function App() {
 
   return (
     <div>
-      <nav style={{ padding: '1rem 2rem', background: '#f5f5f5', borderBottom: '1px solid #ddd', display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+      <nav style={{ padding: '1rem 2rem', background: '#f5f5f5', borderBottom: '1px solid #ddd', display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
         <h2 style={{ margin: 0 }}>RetailSense AI</h2>
         <button onClick={() => setView('upload')}>Upload</button>
         <button onClick={() => setView('dashboard')}>Dashboard</button>
         <button onClick={() => setView('trends')}>Trends</button>
         <button onClick={() => setView('segments')}>Segments</button>
+        <button onClick={() => setView('assistant')}>AI Assistant</button>
       </nav>
       {view === 'upload' && <Upload />}
       {view === 'dashboard' && <Dashboard datasetId={datasetId} />}
       {view === 'trends' && <Trends datasetId={datasetId} />}
       {view === 'segments' && <Segments datasetId={datasetId} />}
+      {view === 'assistant' && <Assistant datasetId={datasetId} />}
     </div>
   )
 }
 
 export default App
+
 
 
 
