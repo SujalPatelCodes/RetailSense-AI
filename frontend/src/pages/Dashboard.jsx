@@ -29,7 +29,7 @@ function KPICard({ title, value, icon: Icon, trend }) {
       </div>
       <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
         <p style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.25rem', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</p>
-        <p style={{ fontSize: '1.5rem', fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value}</p>
+        <p style={{ fontSize: '1.25rem', fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem', wordBreak: 'break-word' }}>{value}</p>
         {trend && <p style={{ fontSize: '0.7rem', color: '#10b981', margin: 0 }}>{trend}</p>}
       </div>
     </div>
