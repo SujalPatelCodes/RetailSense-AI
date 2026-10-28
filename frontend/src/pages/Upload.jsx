@@ -13,7 +13,7 @@ export default function Upload({ datasetInfo, setDatasetInfo, setDatasetId, setC
   useEffect(() => {
     if (datasetInfo) {
       setResult(datasetInfo);
-      setFile({ name: datasetInfo.filename || `dataset_${datasetInfo.dataset_id}.csv`, size: 0 });
+      setFile(null);
     } else {
       setResult(null);
       setFile(null);
@@ -61,7 +61,7 @@ export default function Upload({ datasetInfo, setDatasetInfo, setDatasetId, setC
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!file) {
+    if (!file || !(file instanceof File)) {
       setError("Please select a CSV file");
       return;
     }
@@ -71,14 +71,18 @@ export default function Upload({ datasetInfo, setDatasetInfo, setDatasetId, setC
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await api.post("/api/datasets/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await api.post("/api/datasets/upload", formData);
       setResult(res.data);
       if (setDatasetInfo) setDatasetInfo(res.data);
       if (setDatasetId) setDatasetId(res.data.dataset_id);
     } catch (err) {
-      const msg = err.response?.data?.detail || err.message || "Upload failed";
+      console.error('Upload error:', err);
+      let msg = "Upload failed";
+      if (err.response?.data?.detail) {
+        msg = typeof err.response.data.detail === 'string' ? err.response.data.detail : JSON.stringify(err.response.data.detail);
+      } else if (err.message) {
+        msg = err.message;
+      }
       setError(msg);
     } finally {
       setUploading(false);

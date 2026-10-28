@@ -2,15 +2,23 @@
 
 Sales Analytics and Intelligent Business Insights using free and open-source tools.
 
-## Stack (Free Only)
-- Frontend: React + Vite
-- Backend: Python + FastAPI
-- Data Processing: Pandas
-- Machine Learning: Scikit-learn
-- Charts: Plotly (plotly.js / react-plotly.js)
-- Database: SQLite
-- Local AI: Ollama
-- Testing: pytest
+## Tech Stack
+- **Frontend:** React + Vite
+- **Backend:** Python + FastAPI
+- **Data Processing:** Pandas
+- **Machine Learning:** Scikit-learn
+- **Charts:** Plotly.js / react-plotly.js
+- **Database:** SQLite
+- **Local AI:** Ollama (optional)
+- **Testing:** pytest
+
+## Features
+- CSV upload with validation and automatic cleaning
+- Sales KPI dashboard
+- Monthly trends and product performance analysis
+- Customer segmentation with KMeans clustering
+- Local AI assistant grounded in computed metrics
+- Persistent local storage with SQLite
 
 ## Project Structure
 ```
@@ -24,26 +32,24 @@ RetailSense AI/
 │   ├── tests/
 │   └── requirements.txt
 ├── data/              # Sample data
-│   └── sample_sales.csv
 └── README.md
 ```
 
 ## Setup Instructions
 
 ### Prerequisites
-- Node.js (v18+)
+- Node.js 18+
 - Python 3.10+
 - Git
-- (Optional) Ollama for local AI assistant
 
 ### Backend Setup
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
-Backend runs at: http://localhost:8000  
-API docs: http://localhost:8000/docs
+- API: http://127.0.0.1:8000
+- Docs: http://127.0.0.1:8000/docs
 
 ### Frontend Setup
 ```bash
@@ -51,7 +57,7 @@ cd frontend
 npm install
 npm run dev
 ```
-Frontend runs at: http://localhost:5173
+- App: http://localhost:5173
 
 ### Ollama (Optional)
 ```bash
@@ -59,23 +65,21 @@ ollama pull llama3.2
 ollama serve
 ```
 
-## Features Completed
-- Phase 1: Project setup and architecture
-- Phase 2: CSV upload, validation, cleaning, SQLite storage
-- Phase 3: KPI dashboard
-- Phase 4: Sales trends and product performance
-- Phase 5: Customer segmentation with KMeans
-- Phase 6: Local AI assistant with Ollama
-- Phase 7: Testing, sample data, documentation
+## Usage
+1. Start both backend and frontend servers
+2. Navigate to Upload & Data Cleaning
+3. Upload a CSV with required columns: `order_id`, `order_date`, `quantity`, `unit_price`
+4. Optional columns: `customer_id`, `product`, `category`
+5. View results in Dashboard, Trends, Segments, or AI Assistant
 
-## API Routes
-- GET /api/health
-- POST /api/datasets/upload
-- GET /api/datasets/{dataset_id}/summary
-- GET /api/datasets/{dataset_id}/trends
-- GET /api/datasets/{dataset_id}/products
-- GET /api/datasets/{dataset_id}/customers/segments
-- POST /api/datasets/{dataset_id}/assistant
+## API Endpoints
+- `GET /api/health` - Health check
+- `POST /api/datasets/upload` - Upload and clean CSV
+- `GET /api/datasets/{id}/summary` - KPI metrics
+- `GET /api/datasets/{id}/trends` - Monthly trends
+- `GET /api/datasets/{id}/products` - Product rankings
+- `GET /api/datasets/{id}/customers/segments` - Customer segments
+- `POST /api/datasets/{id}/assistant` - AI Q&A
 
 ## Testing
 ```bash
@@ -86,5 +90,5 @@ pytest
 ## Notes
 - Runs entirely locally with no paid services
 - SQLite requires no separate database server
-- AI assistant works with Ollama or falls back to computed facts
+- AI assistant works without Ollama using computed fallbacks
 - Uses only free and open-source tools
